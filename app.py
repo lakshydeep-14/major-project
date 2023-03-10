@@ -45,9 +45,11 @@ def predict():
     
     # Get the final prediction from the SVM
     final_prediction = clf.predict(flat_arr.reshape(1,-1))
+    final_prob = clf.predict_proba(flat_arr.reshape(1,-1))[0][final_prediction[0]]
     
     # Return the predicted class as JSON
-    return jsonify({'class': Categories[final_prediction[0]]})
+    return jsonify({'class': Categories[final_prediction[0]],
+                   'prob': final_prob})
 
 if __name__ == '__main__':
     app.run(debug=True)
